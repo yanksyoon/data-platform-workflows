@@ -136,7 +136,7 @@ jobs:
         working-directory: ${{ inputs.path-to-charm-directory }}
         run: sg lxd -c "${{ steps.pack-command.outputs.command }}"
       - name: Upload charmcraft logs
-        if: ${{ failure() && steps.pack.outcome == 'failure' }}
+        if: ${{ success() || (failure() && steps.pack.outcome == 'failure') }}
         uses: actions/upload-artifact@v4
         with:
           name: logs-charmcraft-build-${{ needs.collect-bases.outputs.artifact-prefix-with-inputs }}-base-${{ matrix.bases_index }}

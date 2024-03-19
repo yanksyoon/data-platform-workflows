@@ -350,6 +350,9 @@ jobs:
       - name: Disk usage
         if: ${{ success() || (failure() && steps.tests.outcome == 'failure') }}
         run: df --human-readable
+      - name: setup tmate on failure
+        if: ${{ failure() }}
+        uses: canonical/action-tmate@main
     outputs:
       juju-snap-channel-for-artifact: ${{ steps.parse-versions.outputs.snap_channel_for_artifact }}
 
